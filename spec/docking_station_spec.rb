@@ -8,7 +8,12 @@ describe DockingStation do
 
   it 'release_bike working bike' do
     dockk = DockingStation.new
-    dockk.dock(10)
+    dockk.dock(Bike.new)
     expect((dockk.release_bike).working?).to eq (true)
+  end
+
+  it 'dock 20 bikes' do
+    20.times { subject.dock Bike.new }
+    expect { subject.dock Bike.new }.to raise_error 'Docking station full'
   end
 end
