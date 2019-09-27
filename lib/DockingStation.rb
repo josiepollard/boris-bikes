@@ -44,3 +44,11 @@ class Bike
     @broken
   end
 end
+
+class Van
+
+end
+
+class Garage
+
+end
