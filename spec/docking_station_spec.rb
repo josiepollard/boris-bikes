@@ -9,13 +9,17 @@ describe DockingStation do
   it 'release_bike working bike' do
     dockk = DockingStation.new
     dockk.dock(Bike.new)
-    expect((dockk.release_bike).working?).to eq (true)
+    expect((dockk.release_bike).broken?).to eq(false)
   end
 
   it 'dock 20 bikes' do
-    DockingStation::DEFAULT_CAPACITY.times do
+    subject.capacity.times do
       subject.dock Bike.new
     end
     expect { subject.dock Bike.new }.to raise_error 'Docking station full'
+  end
+
+  it 'has a default capacity' do
+    expect(subject.capacity).to eq DockingStation::DEFAULT_CAPACITY
   end
 end
