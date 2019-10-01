@@ -1,6 +1,6 @@
 class DockingStation
   DEFAULT_CAPACITY = 20
-  attr_reader :capacity
+  attr_accessor :capacity, :bike_list
 
   def initialize
     @bike_list = []
@@ -17,7 +17,12 @@ class DockingStation
     @bike_list.push(bike)
   end
 
-
+  def dock_from_van(van_storage)
+    @bike_list = []
+    van_storage.each do |bike|
+      dock(bike)
+    end
+  end
   private
 
   def full?
@@ -31,7 +36,7 @@ class DockingStation
 end
 
 class Bike
-
+  attr_accessor :broken
   def initialize
     @broken = false
   end
@@ -46,9 +51,39 @@ class Bike
 end
 
 class Van
-
+  attr_accessor :van_storage
+  def initialize
+    @van_storage = []
+  end
+  def add_bike(bikes)
+    bikes.each do |bike|
+      if bike.broken?
+        van_storage << bike
+      end
+    end
+  #  van_storage << bikes
+  end
+  def get_bikes_from_garage(bikes)
+    van_storage = []
+    bikes.each do |bike|
+      van_storage << bike
+    end
+  end
 end
 
 class Garage
-
+  attr_accessor :garage_storage
+  def initialize
+    @garage_storage = []
+  end
+  def get_bikes_from_van(van_storage)
+    van_storage.each do |bike|
+      garage_storage << bike
+    end
+  end
+  def fix
+    garage_storage.each do |bike|
+      bike.broken = false
+    end
+  end
 end
